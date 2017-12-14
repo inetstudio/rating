@@ -1,0 +1,24 @@
+{
+    "name": "inetstudio/rating",
+    "description": "Package for rating",
+    "homepage": "https://github.com/inetstudio/rating",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Konstantin Bukin",
+        "email": "bukin@inetstudio.ru"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "InetStudio\\Rating\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "InetStudio\\Rating\\Providers\\RatingServiceProvider"
+        ]
+      }
+    }
+}

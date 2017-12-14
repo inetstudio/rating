@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateRatingTables extends Migration
+{
+    public function up()
+    {
+        Schema::create('ratings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->morphs('rateable');
+            $table->string('user_id')->index();
+            $table->float('rating', 11, 2);
+            $table->timestamp('created_at')->nullable();
+        });
+
+        Schema::create('ratings_total', function (Blueprint $table) {
+            $table->increments('id');
+            $table->morphs('rateable');
+            $table->float('rating', 11, 2);
+            $table->integer('raters');
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('ratings_total');
+        Schema::dropIfExists('ratings');
+    }
+}
