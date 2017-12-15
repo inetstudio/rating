@@ -249,9 +249,7 @@ class RatingService implements RatingServiceContract
      * Получаем id пользователя.
      *
      * @param int $userId
-     * @return int
-     *
-     * @throws \Cog\Likeable\Exceptions\LikerNotDefinedException
+     * @return string
      */
     protected function getRaterUserId($userId)
     {
@@ -281,7 +279,7 @@ class RatingService implements RatingServiceContract
      *
      * @return int
      */
-    protected function loggedInUserId(): int
+    protected function loggedInUserId(): ?int
     {
         return auth()->id();
     }
