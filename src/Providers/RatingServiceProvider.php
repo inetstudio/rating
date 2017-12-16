@@ -25,6 +25,7 @@ class RatingServiceProvider extends ServiceProvider
         $this->registerConsoleCommands();
         $this->registerPublishes();
         //$this->registerRoutes();
+        $this->registerTranslations();
         $this->registerObservers();
     }
 
@@ -60,11 +61,9 @@ class RatingServiceProvider extends ServiceProvider
      */
     protected function registerPublishes(): void
     {
-        /*
         $this->publishes([
             __DIR__.'/../../config/rating.php' => config_path('rating.php'),
         ], 'config');
-        */
 
         if ($this->app->runningInConsole()) {
             if (! class_exists('CreateRatingTables')) {
@@ -84,6 +83,16 @@ class RatingServiceProvider extends ServiceProvider
     protected function registerRoutes(): void
     {
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+    }
+
+    /**
+     * Регистрация переводов.
+     *
+     * @return void
+     */
+    protected function registerTranslations(): void
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'rating');
     }
 
     /**
