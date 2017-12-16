@@ -50,6 +50,15 @@ interface RatingServiceContract
     public function isRated(RateableContract $rateable, $userId);
 
     /**
+     * Получаем оценку материала от пользователя.
+     *
+     * @param \InetStudio\Rating\Contracts\Models\Traits\RateableContract $rateable
+     * @param int|null $userId
+     * @return float
+     */
+    public function userRate(RateableContract $rateable, $userId);
+
+    /**
      * Обновляем счетчик рейтинга.
      *
      * @param \InetStudio\Rating\Contracts\Models\Traits\RateableContract $rateable

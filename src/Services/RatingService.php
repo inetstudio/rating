@@ -106,6 +106,24 @@ class RatingService implements RatingServiceContract
     }
 
     /**
+     * Получаем оценку материала от пользователя.
+     *
+     * @param \InetStudio\Rating\Contracts\Models\Traits\RateableContract $rateable
+     * @param int|null $userId
+     * @return float
+     */
+    public function userRate(RateableContract $rateable, $userId): ?float
+    {
+        $userId = $this->getRaterUserId($userId);
+
+        $rate = $rateable->ratings()->where([
+            'user_id' => $userId,
+        ])->first();
+
+        return ($rate) ? $rate->rating : null;
+    }
+
+    /**
      * Обновляем счетчик рейтинга.
      *
      * @param \InetStudio\Rating\Contracts\Models\Traits\RateableContract $rateable

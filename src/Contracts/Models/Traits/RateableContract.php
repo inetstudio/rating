@@ -68,6 +68,14 @@ interface RateableContract
     public function getRatingAverage();
 
     /**
+     * Получаем оценку материала от пользователя.
+     *
+     * @param int|null $userId Если пусто, то берется текущий пользователь.
+     * @return float
+     */
+    public function getUserRateAttribute($userId = null);
+
+    /**
      * Оценивал ли текущий пользователь материал.
      *
      * @return bool

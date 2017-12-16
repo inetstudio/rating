@@ -103,6 +103,17 @@ trait Rateable
     }
 
     /**
+     * Получаем оценку материала от пользователя.
+     *
+     * @param int|null $userId Если пусто, то берется текущий пользователь.
+     * @return float
+     */
+    public function getUserRateAttribute($userId = null)
+    {
+        return app(RatingServiceContract::class)->userRate($this, $userId);
+    }
+
+    /**
      * Получаем все материалы, которые оценивал пользователь.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
