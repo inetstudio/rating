@@ -53,7 +53,7 @@ class RatingService implements RatingServiceContract
         if (! is_null($id) && $id > 0 && $item = $this->availableTypes[$type]::find($id)) {
             $interfaces = class_implements($item);
 
-            if (isset($interfaces['RateableContract'])) {
+            if (isset($interfaces[RateableContract::class])) {
                 return [
                     'success' => true,
                     'item' => $item,
@@ -61,7 +61,7 @@ class RatingService implements RatingServiceContract
             } else {
                 return [
                     'success' => false,
-                    'item' => trans('rating::errors.notImplementRateable'),
+                    'message' => trans('rating::errors.notImplementRateable'),
                 ];
             }
         } else {
