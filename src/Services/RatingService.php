@@ -18,6 +18,60 @@ use InetStudio\Rating\Contracts\Models\RatingTotalModelContract;
  */
 class RatingService implements RatingServiceContract
 {
+    public $availableTypes = [];
+
+    /**
+     * RatingService constructor.
+     */
+    public function __construct()
+    {
+        $types = config('rating.rateable');
+
+        if ($types) {
+            foreach ($types as $type => $model) {
+                $this->availableTypes[$type] = new $model();
+            }
+        }
+    }
+
+    /**
+     * Проверяем материал на возможность оценки.
+     *
+     * @param string $type
+     * @param int $id
+     * @return array
+     */
+    public function checkIsRateable(string $type, int $id): array
+    {
+        if (! isset($this->availableTypes[$type])) {
+            return [
+                'success' => false,
+                'message' => trans('rating::errors.materialIncorrectType'),
+            ];
+        }
+
+        if (! is_null($id) && $id > 0 && $item = $this->availableTypes[$type]::find($id)) {
+            $interfaces = class_implements($item);
+
+            if (isset($interfaces['RateableContract'])) {
+                return [
+                    'success' => true,
+                    'item' => $item,
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'item' => trans('rating::errors.notImplementRateable'),
+                ];
+            }
+        } else {
+            return [
+                'success' => false,
+                'message' => trans('rating::errors.materialNotFound'),
+            ];
+        }
+    }
+
     /**
      * Добавляем оценку пользователя материалу.
      *
