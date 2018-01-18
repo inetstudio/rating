@@ -60,6 +60,8 @@ class RatingController extends Controller
             $data->push($item);
         }
 
-        return DataTables::of($data)->make();
+        return DataTables::of($data)
+            ->rawColumns(['actions'])
+            ->make();
     }
 }
