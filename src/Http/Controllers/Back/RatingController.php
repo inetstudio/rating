@@ -9,11 +9,10 @@ use InetStudio\Rating\Models\RatingTotalModel;
 use InetStudio\AdminPanel\Http\Controllers\Back\Traits\DatatablesTrait;
 
 /**
- * Контроллер для управления страницами.
- *
- * Class ContestByTagStatusesController
+ * Class RatingController
+ * @package InetStudio\Rating\Http\Controllers\Back
  */
-class PagesController extends Controller
+class RatingController extends Controller
 {
     use DatatablesTrait;
 
@@ -28,7 +27,7 @@ class PagesController extends Controller
     {
         $table = $this->generateTable($dataTable, 'rating', 'index');
 
-        return view('admin.module.rating::back.pages.statistic', compact('table'));
+        return view('admin.module.rating::back.pages.index', compact('table'));
     }
 
     /**
