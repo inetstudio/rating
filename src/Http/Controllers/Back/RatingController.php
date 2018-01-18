@@ -3,9 +3,12 @@
 namespace InetStudio\Rating\Http\Controllers\Back;
 
 use Illuminate\View\View;
+use League\Fractal\Manager;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use InetStudio\Rating\Models\RatingTotalModel;
+use League\Fractal\Serializer\DataArraySerializer;
+use InetStudio\Rating\Transformers\Back\RatingTransformer;
 use InetStudio\AdminPanel\Http\Controllers\Back\Traits\DatatablesTrait;
 
 /**
@@ -44,24 +47,27 @@ class RatingController extends Controller
                 $query->with(['ratings', 'ratingTotal'])->select(['id', 'title', 'href']);
             }])->get();
 
-        $data = collect();
+        $resource = (new RatingTransformer())->transformCollection($ratings);
 
-        foreach ($ratings as $rating) {
-            $item = [
-                'title' => $rating->rateable->title,
-                'rating' => $rating->rateable->getRatingAverage(),
-                'likes' => $rating->rateable->ratings->where('rating', 5)->count(),
-                'dislikes' => $rating->rateable->ratings->where('rating', 0)->count(),
-                'actions' => view('admin.module.rating::back.partials.datatables.actions', [
-                    'href' => $rating->rateable->href,
-                ])->render(),
-            ];
-
-            $data->push($item);
-        }
-
-        return DataTables::of($data)
+        return DataTables::of(collect($this->serializeToArray($resource)))
             ->rawColumns(['actions'])
             ->make();
+    }
+
+    /**
+     * Преобразовываем данные в массив.
+     *
+     * @param $resource
+     *
+     * @return array
+     */
+    private function serializeToArray($resource): array
+    {
+        $manager = new Manager();
+        $manager->setSerializer(new DataArraySerializer());
+
+        $transformation = $manager->createData($resource)->toArray();
+
+        return $transformation['data'];
     }
 }
