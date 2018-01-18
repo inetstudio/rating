@@ -24,7 +24,8 @@ class RatingServiceProvider extends ServiceProvider
     {
         $this->registerConsoleCommands();
         $this->registerPublishes();
-        //$this->registerRoutes();
+        $this->registerRoutes();
+        $this->registerViews();
         $this->registerTranslations();
         $this->registerObservers();
     }
@@ -83,6 +84,16 @@ class RatingServiceProvider extends ServiceProvider
     protected function registerRoutes(): void
     {
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+    }
+
+    /**
+     * Регистрация представлений.
+     *
+     * @return void
+     */
+    protected function registerViews(): void
+    {
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'admin.module.rating');
     }
 
     /**
