@@ -2,6 +2,7 @@
 
 namespace InetStudio\Rating\Providers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use InetStudio\Rating\Models\RatingModel;
 use InetStudio\Rating\Services\RatingService;
@@ -28,6 +29,7 @@ class RatingServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerTranslations();
         $this->registerObservers();
+        $this->registerViewComposers();
     }
 
     /**
@@ -114,6 +116,20 @@ class RatingServiceProvider extends ServiceProvider
     protected function registerObservers(): void
     {
         $this->app->make(RatingModelContract::class)->observe(RatingObserver::class);
+    }
+
+    /**
+     * Register Comments's view composers.
+     *
+     * @return void
+     */
+    public function registerViewComposers(): void
+    {
+        view()->composer('admin.module.rating::back.partials.analytics.statistic', function ($view) {
+            $ratings = RatingModel::select(['rating', DB::raw('count(*) as total')])->groupBy('rating')->get();
+
+            $view->with('ratings', $ratings);
+        });
     }
 
     /**

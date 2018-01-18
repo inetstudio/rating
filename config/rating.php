@@ -29,9 +29,10 @@ return [
         'columns' => [
             'index' => [
                 ['data' => 'title', 'name' => 'title', 'title' => 'Заголовок'],
-                ['data' => 'rating', 'name' => 'rating', 'title' => 'Рейтинг', 'orderable' => false],
+                ['data' => 'rating', 'name' => 'rating', 'title' => 'Рейтинг'],
                 ['data' => 'likes', 'name' => 'likes', 'title' => 'Количество лайков'],
                 ['data' => 'dislikes', 'name' => 'dislikes', 'title' => 'Количество дизлайков'],
+                ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
             ],
         ],
     ],

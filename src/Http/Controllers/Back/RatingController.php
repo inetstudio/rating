@@ -34,7 +34,8 @@ class RatingController extends Controller
      * DataTables ServerSide.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws \Exception|\Throwable
      */
     public function data()
     {
@@ -48,10 +49,12 @@ class RatingController extends Controller
         foreach ($ratings as $rating) {
             $item = [
                 'title' => $rating->rateable->title,
-                'href' => $rating->rateable->href,
                 'rating' => $rating->rateable->getRatingAverage(),
                 'likes' => $rating->rateable->ratings->where('rating', 5)->count(),
                 'dislikes' => $rating->rateable->ratings->where('rating', 0)->count(),
+                'actions' => view('admin.module.rating::back.partials.datatables.actions', [
+                    'href' => $rating->rateable->href,
+                ])->render(),
             ];
 
             $data->push($item);

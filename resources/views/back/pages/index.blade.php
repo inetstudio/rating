@@ -18,6 +18,9 @@
     @endpush
 
     <div class="wrapper wrapper-content">
+
+        @include('admin.module.rating::back.partials.analytics.statistic')
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
