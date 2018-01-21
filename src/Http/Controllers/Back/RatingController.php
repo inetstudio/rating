@@ -22,13 +22,12 @@ class RatingController extends Controller
     /**
      * Статистика.
      *
-     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function index(DataTables $dataTable): View
+    public function index(): View
     {
-        $table = $this->generateTable($dataTable, 'rating', 'index');
+        $table = $this->generateTable('rating', 'index');
 
         return view('admin.module.rating::back.pages.index', compact('table'));
     }
