@@ -2,12 +2,14 @@
 
 namespace InetStudio\Rating\Models;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
+use InetStudio\ACL\Users\Models\Traits\HasUser;
 use InetStudio\Rating\Contracts\Models\RatingModelContract;
 
 class RatingModel extends Model implements RatingModelContract
 {
+    use HasUser;
+
     const UPDATED_AT = null;
 
     /**
@@ -44,22 +46,6 @@ class RatingModel extends Model implements RatingModelContract
     protected $casts = [
         'rating' => 'float',
     ];
-
-    /**
-     * Обратное отношение с моделью пользователя
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        $userClassName = Config::get('auth.model');
-
-        if (is_null($userClassName)) {
-            $userClassName = Config::get('auth.providers.users.model');
-        }
-
-        return $this->belongsTo($userClassName);
-    }
 
     /**
      * Полиморфное отношение с остальными моделями.
