@@ -330,14 +330,14 @@ class RatingService implements RatingServiceContract
         }
 
         if (! $userId) {
-            $cookieData = request()->cookie('rating_user_hash');
+            $cookieData = request()->cookie('guest_user_hash');
 
             if ($cookieData) {
                 return $cookieData;
             } else {
                 $uuid = Uuid::uuid4()->toString();
 
-                Cookie::queue('rating_user_hash', $uuid, 5256000);
+                Cookie::queue('guest_user_hash', $uuid, 5256000);
 
                 return $uuid;
             }
