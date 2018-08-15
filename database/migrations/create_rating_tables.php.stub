@@ -13,6 +13,8 @@ class CreateRatingTables extends Migration
             $table->string('user_id')->index();
             $table->float('rating', 11, 2);
             $table->timestamp('created_at')->nullable();
+
+            $table->index(['rateable_id', 'rateable_type']);
         });
 
         Schema::create('ratings_total', function (Blueprint $table) {
@@ -20,6 +22,8 @@ class CreateRatingTables extends Migration
             $table->morphs('rateable');
             $table->float('rating', 11, 2);
             $table->integer('raters');
+
+            $table->index(['rateable_id', 'rateable_type']);
         });
     }
 
