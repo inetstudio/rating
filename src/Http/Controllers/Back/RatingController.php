@@ -43,8 +43,12 @@ class RatingController extends Controller
     {
         $ratings = RatingTotalModel::with([
             'rateable' => function ($query) {
-                $query->with(['ratings', 'ratingTotal'])->select(['id', 'title', 'href']);
+                $query->with(['ratings', 'ratingTotal'])->select(['id', 'title', 'slug']);
             }])->get();
+
+        $ratings = $ratings->filter(function ($value, $key) {
+            return isset($value->rateable);
+        });
 
         $resource = (new RatingTransformer())->transformCollection($ratings);
 
