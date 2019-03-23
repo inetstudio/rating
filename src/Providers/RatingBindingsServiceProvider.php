@@ -3,17 +3,13 @@
 namespace InetStudio\Rating\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
 /**
  * Class RatingBindingsServiceProvider.
  */
-class RatingBindingsServiceProvider extends ServiceProvider
+class RatingBindingsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-    * @var  bool
-    */
-    protected $defer = true;
-
     /**
     * @var  array
     */
