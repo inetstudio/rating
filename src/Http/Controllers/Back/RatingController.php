@@ -5,7 +5,7 @@ namespace InetStudio\Rating\Http\Controllers\Back;
 use Illuminate\View\View;
 use League\Fractal\Manager;
 use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Controller;
+use InetStudio\AdminPanel\Base\Http\Controllers\Controller;
 use InetStudio\Rating\Models\RatingTotalModel;
 use League\Fractal\Serializer\DataArraySerializer;
 use InetStudio\Rating\Transformers\Back\RatingTransformer;
