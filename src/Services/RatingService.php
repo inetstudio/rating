@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use InetStudio\Rating\Contracts\Models\RatingModelContract;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\Rating\Contracts\Models\Traits\RateableContract;
 use InetStudio\Rating\Contracts\Services\RatingServiceContract;
 use InetStudio\Rating\Contracts\Models\RatingTotalModelContract;
@@ -25,13 +26,7 @@ class RatingService implements RatingServiceContract
      */
     public function __construct()
     {
-        $types = config('rating.rateable');
-
-        if ($types) {
-            foreach ($types as $type => $model) {
-                $this->availableTypes[$type] = new $model();
-            }
-        }
+        $this->availableTypes = config('rating.rateable', []);
     }
 
     /**
@@ -40,6 +35,8 @@ class RatingService implements RatingServiceContract
      * @param string $type
      * @param int $id
      * @return array
+     *
+     * @throws BindingResolutionException
      */
     public function checkIsRateable(string $type, int $id): array
     {
@@ -50,7 +47,9 @@ class RatingService implements RatingServiceContract
             ];
         }
 
-        if (! is_null($id) && $id > 0 && $item = $this->availableTypes[$type]::find($id)) {
+        $model = app()->make($this->availableTypes[$type]);
+
+        if (! is_null($id) && $id > 0 && $item = $model::find($id)) {
             $interfaces = class_implements($item);
 
             if (isset($interfaces[RateableContract::class])) {
