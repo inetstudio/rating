@@ -45,7 +45,12 @@ class ItemsController extends Controller implements ItemsControllerContract
 
         $item = $check['item']->rate($this->rates[mb_strtolower($rate)]);
 
-        event(app()->make('InetStudio\Rating\Contracts\Events\Front\ItemRateChangedContract'));
+        event(
+            app()->make(
+                'InetStudio\Rating\Contracts\Events\Front\ItemRateChangedContract',
+                compact($item)
+            )
+        );
 
         return response()->json([
             'success' => 'success',
