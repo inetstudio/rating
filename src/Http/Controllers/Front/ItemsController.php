@@ -21,11 +21,12 @@ class ItemsController extends Controller implements ItemsControllerContract
      * Оцениваем материал.
      *
      * @param  RatingServiceContract  $ratingService
-     * @param string $rate
-     * @param string $type
-     * @param $id
+     * @param  string  $rate
+     * @param  string  $type
+     * @param  int  $id
      *
      * @return JsonResponse
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function rate(RatingServiceContract $ratingService, string $rate, string $type, int $id): JsonResponse
     {
@@ -48,7 +49,7 @@ class ItemsController extends Controller implements ItemsControllerContract
         event(
             app()->make(
                 'InetStudio\Rating\Contracts\Events\Front\ItemRateChangedContract',
-                compact($item)
+                compact('item')
             )
         );
 
