@@ -1,25 +1,28 @@
 {
-    "name": "inetstudio/rating",
-    "description": "Package for rating",
-    "homepage": "https://github.com/inetstudio/rating",
-    "license": "MIT",
-    "authors": [
-      {
-        "name": "Konstantin Bukin",
-        "email": "bukin@inetstudio.ru"
-      }
-    ],
-    "autoload": {
-      "psr-4": {
-        "InetStudio\\Rating\\": "src/"
-      }
-    },
-    "extra": {
-      "laravel": {
-        "providers": [
-          "InetStudio\\Rating\\Providers\\RatingBindingsServiceProvider",
-          "InetStudio\\Rating\\Providers\\RatingServiceProvider"
-        ]
-      }
+  "name": "inetstudio/rating",
+  "description": "Package for rating",
+  "homepage": "https://github.com/inetstudio/rating",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Konstantin Bukin",
+      "email": "bukin@inetstudio.ru"
     }
+  ],
+  "require": {
+    "inetstudio/admin-panel": "^6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "InetStudio\\Rating\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "InetStudio\\Rating\\Providers\\RatingBindingsServiceProvider",
+        "InetStudio\\Rating\\Providers\\RatingServiceProvider"
+      ]
+    }
+  }
 }
