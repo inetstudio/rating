@@ -14,14 +14,16 @@
   },
   "autoload": {
     "psr-4": {
-      "InetStudio\\Rating\\": "src/"
+      "InetStudio\\RatingsPackage\\": "package/src/",
+      "InetStudio\\RatingsPackage\\Ratings\\": "entities/ratings/src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "InetStudio\\Rating\\Providers\\RatingBindingsServiceProvider",
-        "InetStudio\\Rating\\Providers\\RatingServiceProvider"
+        "InetStudio\\RatingsPackage\\Providers\\ServiceProvider",
+        "InetStudio\\RatingsPackage\\Ratings\\Providers\\BindingsServiceProvider",
+        "InetStudio\\RatingsPackage\\Ratings\\Providers\\ServiceProvider"
       ]
     }
   }
