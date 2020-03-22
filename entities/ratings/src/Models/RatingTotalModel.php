@@ -38,8 +38,8 @@ class RatingTotalModel extends Model implements RatingTotalModelContract
     protected $fillable = [
         'rateable_id',
         'rateable_type',
-        'count',
         'rating',
+        'raters',
     ];
 
     /**

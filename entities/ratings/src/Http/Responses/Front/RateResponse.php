@@ -67,6 +67,7 @@ class RateResponse implements RateResponseContract
         $data = [
             'success' => 'success',
             'message' => trans('ratings_package_ratings::messages.rated'),
+            'rating' => number_format($this->itemsService->getRatingAverage($request->get('item')), 2),
         ];
 
         return response()->json($data);

@@ -23,9 +23,11 @@ class ItemResource extends JsonResource implements ItemResourceContract
      */
     public function toArray($request)
     {
+        $service = app()->make('InetStudio\RatingsPackage\Ratings\Contracts\Services\ItemsServiceContract');
+
         return [
             'title' => $this['rateable']->title,
-            'rating' => $this['rateable']->getRatingAverage(),
+            'rating' => $service->getRatingAverage($this['rateable']),
             'likes' => $this['rateable']->ratings->where('rating', 5)->count(),
             'dislikes' => $this['rateable']->ratings->where('rating', 0)->count(),
             'actions' => view('admin.module.ratings-package.ratings::back.partials.datatables.actions', [

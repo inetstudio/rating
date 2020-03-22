@@ -71,9 +71,7 @@ class IndexService extends DataTable implements IndexServiceContract
     {
         return $this->model->with(
             [
-                'rateable' => function ($query) {
-                    $query->with(['ratings', 'ratingTotal'])->select(['id', 'title', 'slug']);
-                },
+                'rateable',
             ]
         )->whereHasMorph('rateable', '*')->get();
     }

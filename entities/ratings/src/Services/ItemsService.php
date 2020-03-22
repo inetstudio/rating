@@ -65,9 +65,9 @@ class ItemsService extends BaseService implements ItemsServiceContract
                         'rating' => (float) $rating,
                     ]
                 );
-        }
 
-        $this->updateRating($item, $rating);
+            $this->updateRating($item, $rating);
+        }
 
         return $item;
     }
@@ -104,6 +104,54 @@ class ItemsService extends BaseService implements ItemsServiceContract
     }
 
     /**
+     * Получаем рейтинг материала в процентах.
+     *
+     * @param $item
+     * @param int $max
+     *
+     * @return float
+     */
+    public function getRatingPercent($item, int $max = 5)
+    {
+        $this->addRatingsRelations($item);
+        $average = $this->getRatingAverage($item);
+
+        return $average * 100 / $max;
+    }
+
+    /**
+     * Получаем средний рейтинг материала.
+     *
+     * @param $item
+     *
+     * @return float
+     */
+    public function getRatingAverage($item)
+    {
+        $this->addRatingsRelations($item);
+        $ratingsTotal = $item->ratingsTotal;
+
+        $rating = $ratingsTotal ? $ratingsTotal->rating : 0;
+        $rater = $ratingsTotal ? $ratingsTotal->raters : 0;
+
+        return $rating > 0 ? $rating / $rater : 0;
+    }
+
+    /**
+     * Получаем количество проголосовавших.
+     *
+     * @param $item
+     *
+     * @return int
+     */
+    public function getRatersCount($item): int
+    {
+        $this->addRatingsRelations($item);
+
+        return $item->ratingsTotal->raters ?? 0;
+    }
+
+    /**
      * Добавил ли текущий пользователь материал в избранное.
      *
      * @param $item
@@ -135,6 +183,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
      */
     public function userRate($item, $userId = null): ?float
     {
+        $this->addRatingsRelations($item);
         $userId = $this->usersService->getUserIdOrHash($userId);
 
         $rate = $item->ratings()
