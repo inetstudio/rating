@@ -7,4 +7,5 @@ namespace InetStudio\RatingsPackage\Ratings\Contracts\Listeners;
  */
 interface RemoveRatingsListenerContract
 {
+    public function handle($event): void;
 }
